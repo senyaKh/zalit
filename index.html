@@ -7,69 +7,68 @@
   <meta name="renderer" content="webkit">
   <link rel="stylesheet" href="style2.css">
   <link rel="stylesheet" href="background.css">
-  <script  src="first-script.js" defer></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.8/lottie.min.js"></script>
+  <script src="first-script.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.8/lottie.min.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200;0,300;0,400;1,200&display=swap');
   </style>
-  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0,  minimum-scale=1.0, maximum-scale=1.0">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
 </head>
 <body>
-<div id="container"></div>
-<div class="animate_container">
-  <div id="particles-js"></div> 
-    </div>
-    <button type ="button" id="myButton2">Изменить прозрачность</button>
-<button id="myButton">Запустить анимацию</button>
-<div  class="return">
-  <p>
-    <span class="keyword">#include</span> <span class="punctuation"><</span><span class="lib">iostream</span><span class="punctuation">></span>
-    <br>
-    <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="lib">std</span><span class="punctuation">;</span>
-    <br>
-    <span class="keyword">int</span> <span class="func">sum</span><span class="punctuation">(</span><span class="keyword">int</span> <span class="func">a</span><span class="punctuation">,</span> <span class="keyword">int</span> <span class="func">b</span><span class="punctuation">)</span> <span class="punctuation">{</span>
-        <br>
-        <span class="keyword">return</span> <span class="func">a</span> <span class="punctuation">+</span> <span class="func">b</span><span class="punctuation">;</span>
-        <div id="underLine2"  class="underline"></div>
-        <br>
-    <span class="punctuation">}</span>
-    <br>
-    <span class="keyword">int</span> 
-    <span class="func">main</span><span class="punctuation">(</span><span class="punctuation">)</span> <span class="punctuation">{</span>
+  <div id="container"></div>
+  <div class="animate_container">
+    <div id="particles-js"></div> 
+  </div>
+  <button type="button" id="myButton2">Изменить прозрачность</button>
+  <button id="myButton">Запустить анимацию</button>
+  <div class="return">
+    <p>
+      <span class="keyword">#include</span> <span class="punctuation"><</span><span class="lib">iostream</span><span class="punctuation">></span>
       <br>
-     <span class="keyword">int</span> <span class="func">result</span> <span class="punctuation">= <span class="func">sum</span><span class="punctuation">(</span><span class="num">5</span><span class="punctuation">,</span> <span class="num">7</span><span class="punctuation">)</span><span class="punctuation">;</span>
-     <div id="underLine" class="underline"></div>
-        <br>
-        <span class="lib">cout</span> <span class="punctuation"><<</span> <span class="str">"Результат: "</span> <span class="punctuation"><<</span> <span class="func">result</span> <span class="punctuation"><<</span> <span class="str">endl</span><span class="punctuation">;</span>
-        <br>
-    <span class="punctuation">}</span>
-</p>
-
-</div>
-<script type="importmap">
-  {
-    "imports": {
-      "three": "https://unpkg.com/three@0.158.0/build/three.module.js",
-      "three/addons/": "https://unpkg.com/three@0.158.0/examples/jsm/"
+      <span class="keyword">using</span> <span class="keyword">namespace</span> <span class="lib">std</span><span class="punctuation">;</span>
+      <br>
+      <span class="keyword">int</span> <span class="func">sum</span><span class="punctuation">(</span><span class="keyword">int</span> <span class="func">a</span>, <span class="keyword">int</span> <span class="func">b</span><span class="punctuation">)</span> <span class="punctuation">{</span>
+      <br>
+      <span class="keyword">return</span> <span class="func">a</span> <span class="punctuation">+</span> <span class="func">b</span><span class="punctuation">;</span>
+      <div id="underLine2" class="underline"></div>
+      <br>
+      <span class="punctuation">}</span>
+      <br>
+      <span class="keyword">int</span> 
+      <span class="func">main</span><span class="punctuation">(</span><span class="punctuation">)</span> <span class="punctuation">{</span>
+      <br>
+      <span class="keyword">int</span> <span class="func">result</span> = <span class="func">sum</span><span class="punctuation">(</span><span class="num">5</span>, <span class="num">7</span><span class="punctuation">)</span><span class="punctuation">;</span>
+      <div id="underLine" class="underline"></div>
+      <br>
+      <span class="lib">cout</span> <span class="punctuation"><<</span> <span class="str">"Результат: "</span> <span class="punctuation"><<</span> <span class="func">result</span> <span class="punctuation"><<</span> <span class="str">endl</span><span class="punctuation">;</span>
+      <br>
+      <span class="punctuation">}</span>
+    </p>
+  </div>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.158.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.158.0/examples/jsm/"
+      }
     }
-  }
-</script>
-<script type="module" src="main2JS.js"></script>
-<script>
-  window.onload = function() {
-    let line2 = document.getElementById('underLine');
-    let line1 = document.getElementById('underLine2');
-    line1.style.width = '300px';
-    // При клике запустите анимацию для второй линии и скройте первую
-    let line1btn = document.getElementById('myButton');
-    line1btn.onclick = function() {
-      line1.style.width = '0';
-      line2.style.display = 'block';
-      line2.style.width = '600px';
-    };
-  };
   </script>
-  	<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script> 
-		<script src="https://raw.githubusercontent.com/mrdoob/three.js/dev/build/three.min.js"></script>
+  <script type="module" src="main2JS.js"></script>
+  <script>
+    window.onload = function() {
+      let line2 = document.getElementById('underLine');
+      let line1 = document.getElementById('underLine2');
+      line1.style.width = '300px';
+      // При клике запустите анимацию для второй линии и скройте первую
+      let line1btn = document.getElementById('myButton');
+      line1btn.onclick = function() {
+        line1.style.width = '0';
+        line2.style.display = 'block';
+        line2.style.width = '600px';
+      };
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script src="https://raw.githubusercontent.com/mrdoob/three.js/dev/build/three.min.js"></script>
 </body>
 </html>
