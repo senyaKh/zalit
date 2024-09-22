@@ -1,0 +1,151 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap');
+
+body {
+	font-family: 'Source Code Pro', monospace;
+	background-color: #2d2d30;
+	color: #ffffff;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+.container {
+	display: flex;
+	flex-direction: row;
+	height: 100vh;
+}
+
+/* Секция с кодом */
+.code-section {
+	width: 40%;
+	background-color: #1e1e1e;
+	padding: 20px;
+	overflow-y: auto;
+}
+
+.code-section h2 {
+	text-align: center;
+	color: #ffffff;
+}
+
+.code-block {
+	background-color: #2d2d30;
+	padding: 15px;
+	border-radius: 5px;
+	overflow-x: auto;
+	white-space: pre;
+}
+
+.keyword {
+	color: #569cd6;
+}
+
+.type {
+	color: #4ec9b0;
+}
+
+.variable {
+	color: #9cdcfe;
+}
+
+.value {
+	color: #ce9178;
+}
+
+/* Секция с анимацией */
+.animation-section {
+	width: 60%;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+/* Контейнер для 3D сцены */
+#container {
+	width: 100%;
+	height: 70%;
+	background-color: #2d2d30;
+}
+
+/* Контролы */
+.controls {
+	width: 80%;
+	background: rgba(0, 0, 0, 0.6);
+	padding: 15px 20px;
+	border-radius: 10px;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	align-items: center;
+	justify-content: center;
+	margin-top: 20px;
+}
+
+.input-group {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.input-group label {
+	margin-bottom: 5px;
+	color: #ffffff;
+}
+
+.input-group input {
+	padding: 5px 10px;
+	border: none;
+	border-radius: 5px;
+	outline: none;
+	font-size: 16px;
+	width: 150px;
+	text-align: center;
+}
+
+.button-group {
+	display: flex;
+	gap: 10px;
+}
+
+.button-group button {
+	padding: 5px 15px;
+	border: none;
+	border-radius: 5px;
+	background-color: #ffffff;
+	color: #2d2d30;
+	font-size: 16px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+.button-group button:hover {
+	background-color: #dddddd;
+}
+
+/* Адаптивность */
+@media (max-width: 900px) {
+	.container {
+		flex-direction: column;
+	}
+	.code-section,
+	.animation-section {
+		width: 100%;
+		height: 50%;
+	}
+	.controls {
+		width: 90%;
+	}
+}
+
+@media (max-width: 600px) {
+	.controls {
+		flex-direction: column;
+		align-items: stretch;
+	}
+	.input-group input,
+	.button-group button {
+		width: 100%;
+	}
+}
