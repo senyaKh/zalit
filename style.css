@@ -15,7 +15,6 @@ body {
 	height: 100vh;
 }
 
-/* Секция с кодом */
 .code-section {
 	width: 40%;
 	background-color: #1e1e1e;
@@ -52,7 +51,6 @@ body {
 	color: #ce9178;
 }
 
-/* Секция с анимацией */
 .animation-section {
 	width: 60%;
 	position: relative;
@@ -62,16 +60,14 @@ body {
 	justify-content: center;
 }
 
-/* Контейнер для 3D сцены */
 #container {
 	width: 100%;
 	height: 70%;
 	background-color: #2d2d30;
 }
 
-/* Контролы */
 .controls {
-	width: 80%;
+	width: 90%;
 	background: rgba(0, 0, 0, 0.6);
 	padding: 15px 20px;
 	border-radius: 10px;
@@ -132,10 +128,10 @@ body {
 	.code-section,
 	.animation-section {
 		width: 100%;
-		height: 50%;
+		height: auto;
 	}
-	.controls {
-		width: 90%;
+	#container {
+		height: 300px;
 	}
 }
 
@@ -147,5 +143,8 @@ body {
 	.input-group input,
 	.button-group button {
 		width: 100%;
+	}
+	#container {
+		height: 250px;
 	}
 }

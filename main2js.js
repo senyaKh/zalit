@@ -1,5 +1,5 @@
-import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 import * as THREE from 'three';
+import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 
@@ -10,18 +10,18 @@ const scene = new THREE.Scene();
 const container = document.getElementById('container');
 const containerWidth = container.clientWidth;
 const containerHeight = container.clientHeight;
-
-const camera = new THREE.PerspectiveCamera(75, containerWidth / containerHeight, 0.1, 1000);
-camera.position.z = 8;
+const camera = new THREE.PerspectiveCamera(45, containerWidth / containerHeight, 0.1, 1000);
+camera.position.z = 10;
 
 // Настройка рендерера
 const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 renderer.setSize(containerWidth, containerHeight);
 container.appendChild(renderer.domElement);
+renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setClearColor(0x2d2d30, 0);
 
 // Настройка освещения
-const ambientLight = new THREE.AmbientLight(0x404040, 2); // Мягкий белый свет
+const ambientLight = new THREE.AmbientLight(0x404040, 2); // мягкий белый свет
 scene.add(ambientLight);
 
 const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
@@ -53,13 +53,6 @@ let model;
 
 // Массив для хранения всех коробок
 const boxes = [];
-
-// Raycaster и мышь для взаимодействия
-const raycaster = new THREE.Raycaster();
-const mouse = new THREE.Vector2();
-let selectedBoxForRotation = null;
-let isDragging = false;
-let previousMousePosition = { x: 0, y: 0 };
 
 // Функция для применения материала к каждой коробке
 function applyMaterial(box, material) {
@@ -94,11 +87,12 @@ function addLabel(value, box) {
 
 	const textMaterial = new THREE.MeshPhongMaterial({ color: 0xffffff });
 	const textMesh = new THREE.Mesh(textGeometry, textMaterial);
-	textMesh.castShadow = true; // Текст отбрасывает теней
+	textMesh.castShadow = true; // Текст отбрасывает тени
 	textMesh.receiveShadow = true; // Текст получает тени
 
 	// Позиция метки над коробкой
 	textMesh.position.set(0, 1.5, 0);
+	textMesh.name = 'label'; // Добавляем имя для идентификации
 	box.add(textMesh);
 }
 
@@ -110,10 +104,10 @@ function createBoxes() {
 			model = gltf.scene;
 
 			// Масштабирование модели коробки для лучшего отображения
-			model.scale.set(1, 1, 1); // Измените масштаб, если модель искажена
+			model.scale.set(1, 1, 1);
 
 			// Создание и настройка каждой коробки
-			const positions = [-3, 0, 3]; // x координаты для трех коробок
+			const positions = [-3.5, 0, 3.5]; // x координаты для трех коробок
 			const labels = ['int', 'double', 'char'];
 
 			labels.forEach((label, index) => {
@@ -175,9 +169,8 @@ let isAnimating = false;
 function clearOldTexts() {
 	boxes.forEach((box) => {
 		box.children.forEach((child) => {
-			if (child.isMesh && child.geometry.type === 'TextGeometry') {
+			if (child.isMesh && child.geometry.type === 'TextGeometry' && child.name !== 'label') {
 				box.remove(child);
-				scene.remove(child);
 			}
 		});
 	});
@@ -299,9 +292,6 @@ function animateValuesIntoBoxes() {
 			animateText();
 		}
 	});
-
-	// Обновление C++ кода с cout
-	updateCppCode(intValue, doubleValue, charValue);
 }
 
 // Функция плавного перехода (easing)
@@ -309,84 +299,92 @@ function easeInOutQuad(t) {
 	return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
 }
 
-// Функция обновления C++ кода
-function updateCppCode(intVal, doubleVal, charVal) {
-	const codeBlock = document.querySelector('.code-block');
-
-	const updatedCode = `
-<span class="keyword">#include</span> &lt;iostream&gt;
-<span class="keyword">using</span> <span class="keyword">namespace</span> std;
-
-<span class="keyword">int</span> <span class="variable">main</span>() {
-    <span class="type">int</span> <span class="variable">myInt</span> = <span class="value">${
-			intVal || 0
-		}</span>;
-    <span class="type">double</span> <span class="variable">myDouble</span> = <span class="value">${
-			doubleVal || 0.0
-		}</span>;
-    <span class="type">char</span> <span class="variable">myChar</span> = <span class="value">'${
-			charVal || 'A'
-		}'</span>;
-
-    <span class="keyword">cout</span> &lt;&lt; <span class="value">"myInt: "</span> &lt;&lt; myInt &lt;&lt; <span class="value">"\\n"</span> &lt;&lt; <span class="operator">endl</span>;<br>
-    <span class="keyword">cout</span> &lt;&lt; <span class="value">"myDouble: "</span> &lt;&lt; myDouble &lt;&lt; <span class="value">"\\n"</span> &lt;&lt; <span class="operator">endl</span>;<br>
-    <span class="keyword">cout</span> &lt;&lt; <span class="value">"myChar: "</span> &lt;&lt; myChar &lt;&lt; <span class="value">"\\n"</span> &lt;&lt; <span class="operator">endl</span>;<br><br>
-    <span class="keyword">return</span> <span class="value">0</span>;
-}
-    `;
-
-	codeBlock.innerHTML = updatedCode;
-}
-
 // Вращение коробок
-// Добавим Raycaster для выбора коробки и вращения её отдельно
-renderer.domElement.addEventListener('mousedown', onMouseDown, false);
-renderer.domElement.addEventListener('mousemove', onMouseMove, false);
-renderer.domElement.addEventListener('mouseup', onMouseUp, false);
+let raycaster = new THREE.Raycaster();
+let mouse = new THREE.Vector2();
+let selectedBox = null;
+let isDragging = false;
+let previousMousePosition = {
+	x: 0,
+	y: 0,
+};
 
-function onMouseDown(event) {
-	isDragging = true;
+// Функция для обработки нажатия мыши или касания
+function onPointerDown(event) {
+	event.preventDefault();
 
-	// Получение позиции мыши
 	const rect = renderer.domElement.getBoundingClientRect();
-	mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-	mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
 
-	// Обновление Raycaster
+	if (event.touches) {
+		mouse.x = ((event.touches[0].clientX - rect.left) / rect.width) * 2 - 1;
+		mouse.y = -((event.touches[0].clientY - rect.top) / rect.height) * 2 + 1;
+	} else {
+		mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+		mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+	}
+
 	raycaster.setFromCamera(mouse, camera);
 
-	// Определение пересечений
 	const intersects = raycaster.intersectObjects(boxes, true);
 
 	if (intersects.length > 0) {
-		selectedBoxForRotation = intersects[0].object.parent;
+		selectedBox = intersects[0].object.parent;
+		isDragging = true;
+		if (event.touches) {
+			previousMousePosition = {
+				x: event.touches[0].clientX,
+				y: event.touches[0].clientY,
+			};
+		} else {
+			previousMousePosition = {
+				x: event.clientX,
+				y: event.clientY,
+			};
+		}
+	}
+}
+
+// Функция для обработки движения мыши или касания
+function onPointerMove(event) {
+	if (!isDragging || !selectedBox) return;
+
+	let deltaMove;
+	if (event.touches) {
+		deltaMove = {
+			x: event.touches[0].clientX - previousMousePosition.x,
+			y: event.touches[0].clientY - previousMousePosition.y,
+		};
+		previousMousePosition = {
+			x: event.touches[0].clientX,
+			y: event.touches[0].clientY,
+		};
+	} else {
+		deltaMove = {
+			x: event.clientX - previousMousePosition.x,
+			y: event.clientY - previousMousePosition.y,
+		};
+		previousMousePosition = {
+			x: event.clientX,
+			y: event.clientY,
+		};
 	}
 
-	previousMousePosition = {
-		x: event.clientX,
-		y: event.clientY,
-	};
-}
-
-function onMouseMove(event) {
-	if (!isDragging || !selectedBoxForRotation) return;
-
-	const deltaMove = {
-		x: event.clientX - previousMousePosition.x,
-		y: event.clientY - previousMousePosition.y,
-	};
-
 	// Вращение коробки
-	selectedBoxForRotation.rotation.y += deltaMove.x * 0.005;
-	selectedBoxForRotation.rotation.x += deltaMove.y * 0.005;
-
-	previousMousePosition = {
-		x: event.clientX,
-		y: event.clientY,
-	};
+	selectedBox.rotation.y += deltaMove.x * 0.005;
+	selectedBox.rotation.x += deltaMove.y * 0.005;
 }
 
-function onMouseUp(event) {
+// Функция для обработки отпускания мыши или касания
+function onPointerUp(event) {
 	isDragging = false;
-	selectedBoxForRotation = null;
+	selectedBox = null;
 }
+
+// Добавление обработчиков событий мыши и сенсорных событий
+renderer.domElement.addEventListener('mousedown', onPointerDown, false);
+renderer.domElement.addEventListener('mousemove', onPointerMove, false);
+renderer.domElement.addEventListener('mouseup', onPointerUp, false);
+
+renderer.domElement.addEventListener('touchstart', onPointerDown, false);
+renderer.domElement.addEventListener('touchmove', onPointerMove, false);
+renderer.domElement.addEventListener('touchend', onPointerUp, false);
