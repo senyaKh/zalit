@@ -165,6 +165,14 @@ document.getElementById('toggleOpacityButton').addEventListener('click', toggleO
 const animateButton = document.getElementById('animateButton');
 let isAnimating = false;
 
+// Функция обновления блока кода
+function updateCodeBlock(intVal, doubleVal, charVal) {
+	// Обновляем значения переменных в коде
+	document.getElementById('intValue').innerText = intVal || '0';
+	document.getElementById('doubleValue').innerText = doubleVal || '0.0';
+	document.getElementById('charValue').innerText = charVal ? `'${charVal}'` : `'A'`;
+}
+
 // Функция очистки старых текстов перед новой анимацией
 function clearOldTexts() {
 	boxes.forEach((box) => {
@@ -178,18 +186,22 @@ function clearOldTexts() {
 
 animateButton.addEventListener('click', function () {
 	if (!isAnimating) {
-		animateValuesIntoBoxes();
+		// Получение значений из полей ввода
+		const intValue = document.getElementById('intInput').value.trim();
+		const doubleValue = document.getElementById('doubleInput').value.trim();
+		const charValue = document.getElementById('charInput').value.trim();
+
+		// Обновляем блок кода
+		updateCodeBlock(intValue, doubleValue, charValue);
+
+		// Запускаем анимацию
+		animateValuesIntoBoxes(intValue, doubleValue, charValue);
 	}
 });
 
-function animateValuesIntoBoxes() {
+function animateValuesIntoBoxes(intValue, doubleValue, charValue) {
 	// Очистка старых текстов
 	clearOldTexts();
-
-	// Получение значений из полей ввода
-	const intValue = document.getElementById('intInput').value.trim();
-	const doubleValue = document.getElementById('doubleInput').value.trim();
-	const charValue = document.getElementById('charInput').value.trim();
 
 	// Валидация ввода
 	if (intValue && !Number.isInteger(Number(intValue))) {
@@ -223,7 +235,7 @@ function animateValuesIntoBoxes() {
 	values.forEach((item) => {
 		if (item.value) {
 			// Создание геометрии текста
-			const textGeometry = new TextGeometry(item.value, {
+			const textGeometry = new TextGeometry(item.value.toString(), {
 				font: font,
 				size: 0.5,
 				height: 0.05,

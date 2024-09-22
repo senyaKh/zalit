@@ -20,14 +20,19 @@
 			<!-- Секция с C++ кодом -->
 			<div class="code-section">
 				<h2>Инициализация переменных C++</h2>
-				<pre class="code-block">
+				<pre
+					class="code-block"
+					id="codeBlock">
 <span class="keyword">#include</span> &lt;iostream&gt;
 <span class="keyword">using</span> <span class="keyword">namespace</span> std;
 
 <span class="keyword">int</span> <span class="variable">main</span>() {
-    <span class="type">int</span> <span class="variable">myInt</span> = <span class="value">0</span>;
-    <span class="type">double</span> <span class="variable">myDouble</span> = <span class="value">0.0</span>;
-    <span class="type">char</span> <span class="variable">myChar</span> = <span class="value">'A'</span>;
+    <span class="type">int</span> <span class="variable">myInt</span> = <span class="value" id="intValue">0</span>;
+    <span class="type">double</span> <span class="variable">myDouble</span> = <span class="value" id="doubleValue">0.0</span>;
+    <span class="type">char</span> <span class="variable">myChar</span> = <span class="value" id="charValue">'A'</span>;
+    <span class="keyword">cout</span> &lt;&lt; <span class="variable">myInt</span> &lt;&lt; <span class="string">"\\n"</span>;
+    <span class="keyword">cout</span> &lt;&lt; <span class="variable">myDouble</span> &lt;&lt; <span class="string">"\\n"</span>;
+    <span class="keyword">cout</span> &lt;&lt; <span class="variable">myChar</span> &lt;&lt; <span class="string">"\\n"</span>;
     <span class="keyword">return</span> <span class="value">0</span>;
 }
             </pre>
