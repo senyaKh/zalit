@@ -43,7 +43,8 @@ fontLoader.load(
 	function (loadedFont) {
 		font = loadedFont;
 		// После загрузки шрифта можно создавать коробки с метками
-		createBoxes();
+		// Вы можете указать масштабы коробок здесь
+		createBoxes({ int: 0.8, double: 1.2, char: 0.6 });
 	}
 );
 
@@ -97,14 +98,11 @@ function addLabel(value, box) {
 }
 
 // Функция создания коробок после загрузки шрифта
-function createBoxes() {
+function createBoxes(scales) {
 	loader.load(
 		'model/box1.glb', // Убедитесь, что путь к модели корректный
 		function (gltf) {
 			model = gltf.scene;
-
-			// Масштабирование модели коробки для лучшего отображения
-			model.scale.set(1, 1, 1);
 
 			// Создание и настройка каждой коробки
 			const positions = [-3.5, 0, 3.5]; // x координаты для трех коробок
@@ -113,6 +111,12 @@ function createBoxes() {
 			labels.forEach((label, index) => {
 				const box = model.clone();
 				box.position.set(positions[index], 0, 0);
+
+				// Применяем масштаб, если он указан
+				if (scales && scales[label]) {
+					box.scale.set(scales[label], scales[label], scales[label]);
+				}
+
 				applyMaterial(box, materials[label]);
 				box.castShadow = true; // Коробка отбрасывает тени
 				box.receiveShadow = true; // Коробка получает тени
