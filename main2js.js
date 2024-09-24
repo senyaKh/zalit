@@ -21,7 +21,7 @@ renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setClearColor(0x2d2d30, 0);
 
 // Настройка освещения
-const ambientLight = new THREE.AmbientLight(0x404040, 2); // мягкий белый свет
+const ambientLight = new THREE.AmbientLight(0x808080, 2);
 scene.add(ambientLight);
 
 const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
@@ -30,9 +30,9 @@ scene.add(directionalLight);
 
 // Материалы для коробок
 const materials = {
-	int: new THREE.MeshPhongMaterial({ color: 0xff9999, shininess: 100 }),
-	double: new THREE.MeshPhongMaterial({ color: 0x99ff99, shininess: 100 }),
-	char: new THREE.MeshPhongMaterial({ color: 0x9999ff, shininess: 100 }),
+	int: new THREE.MeshPhongMaterial({ color: 0x48d1cc, shininess: 100 }),
+	double: new THREE.MeshPhongMaterial({ color: 0xb3ff66, shininess: 100 }),
+	char: new THREE.MeshPhongMaterial({ color: 0x8690e4, shininess: 1000 }),
 };
 
 // Загрузка шрифта
@@ -196,6 +196,10 @@ animateButton.addEventListener('click', function () {
 
 		// Запускаем анимацию
 		animateValuesIntoBoxes(intValue, doubleValue, charValue);
+
+		// Закрываем меню на мобильных устройствах
+		const controls = document.querySelector('.controls');
+		controls.classList.remove('open');
 	}
 });
 
@@ -400,3 +404,9 @@ renderer.domElement.addEventListener('mouseup', onPointerUp, false);
 renderer.domElement.addEventListener('touchstart', onPointerDown, false);
 renderer.domElement.addEventListener('touchmove', onPointerMove, false);
 renderer.domElement.addEventListener('touchend', onPointerUp, false);
+
+// Обработчик для кнопки меню на мобильных устройствах
+document.getElementById('menuToggle').addEventListener('click', function () {
+	const controls = document.querySelector('.controls');
+	controls.classList.toggle('open');
+});

@@ -76,7 +76,7 @@ body {
 	gap: 10px;
 	align-items: center;
 	justify-content: center;
-	margin-top: 20px;
+	margin: 10px auto;
 }
 
 .input-group {
@@ -131,7 +131,7 @@ body {
 		height: auto;
 	}
 	#container {
-		height: 300px;
+		height: 400px;
 	}
 }
 
@@ -144,7 +144,70 @@ body {
 	.button-group button {
 		width: 100%;
 	}
+}
+.menu {
+	position: relative;
+}
+
+/* Скрываем кнопку меню на десктопах */
+#menuToggle {
+	display: none;
+}
+
+/* Мобильные устройства */
+@media (max-width: 600px) {
+	/* Изменяем структуру страницы */
+	.container {
+		flex-direction: column;
+		height: 100%;
+	}
+
+	.code-section,
+	.animation-section {
+		width: 100%;
+	}
+
+	.code-section {
+		order: 1;
+	}
+
+	.animation-section {
+		order: 2;
+	}
+
 	#container {
-		height: 250px;
+		height: 300px;
+	}
+
+	/* Настраиваем меню */
+	#menuToggle {
+		display: block;
+		position: fixed;
+		top: 10px;
+		right: 10px;
+		z-index: 1000;
+		background-color: #ffffff;
+		color: #2d2d30;
+		border: none;
+		padding: 10px;
+		border-radius: 5px;
+	}
+
+	.controls {
+		display: none;
+		position: fixed;
+		top: 50px;
+		right: 10px;
+		background-color: rgba(0, 0, 0, 0.9);
+		padding: 15px;
+		border-radius: 5px;
+		z-index: 1000;
+		width: 80%;
+		max-width: 300px;
+	}
+
+	.controls.open {
+		display: flex;
+		flex-direction: column;
 	}
 }

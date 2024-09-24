@@ -27,12 +27,18 @@
 <span class="keyword">using</span> <span class="keyword">namespace</span> std;
 
 <span class="keyword">int</span> <span class="variable">main</span>() {
-    <span class="type">int</span> <span class="variable">myInt</span> = <span class="value" id="intValue">0</span>;
-    <span class="type">double</span> <span class="variable">myDouble</span> = <span class="value" id="doubleValue">0.0</span>;
-    <span class="type">char</span> <span class="variable">myChar</span> = <span class="value" id="charValue">'A'</span>;
-    <span class="keyword">cout</span> &lt;&lt; <span class="variable">myInt</span> &lt;&lt; <span class="string">"\\n"</span>;
-    <span class="keyword">cout</span> &lt;&lt; <span class="variable">myDouble</span> &lt;&lt; <span class="string">"\\n"</span>;
-    <span class="keyword">cout</span> &lt;&lt; <span class="variable">myChar</span> &lt;&lt; <span class="string">"\\n"</span>;
+    <span class="type">int</span> <span class="variable">myInt</span> = <span class="value">0</span>;
+    <span class="type">double</span> <span class="variable">myDouble</span> = <span class="value">0.0</span>;
+    <span class="type">char</span> <span class="variable">myChar</span> = <span class="value">'A'</span>;
+    <span class="keyword">cout</span> &lt;&lt; <span class="string">"Введите значение целочисленной переменной"</span> &lt;&lt; <span class="variable">endl</span>;
+    <span class="keyword">cin</span> &gt;&gt; <span class="variable">myInt</span>;
+    <span class="comment">// myInt = <span id="intValue">0</span></span>
+    <span class="keyword">cout</span> &lt;&lt; <span class="string">"Введите значение вещественной переменной"</span> &lt;&lt; <span class="variable">endl</span>;
+    <span class="keyword">cin</span> &gt;&gt; <span class="variable">myDouble</span>;
+    <span class="comment">// myDouble = <span id="doubleValue">0.0</span></span>
+    <span class="keyword">cout</span> &lt;&lt; <span class="string">"Введите значение символьной переменной"</span> &lt;&lt; <span class="variable">endl</span>;
+    <span class="keyword">cin</span> &gt;&gt; <span class="variable">myChar</span>;
+    <span class="comment">// myChar = <span id="charValue">'A'</span></span>
     <span class="keyword">return</span> <span class="value">0</span>;
 }
             </pre>
@@ -43,35 +49,39 @@
 				<!-- Контейнер для 3D сцены -->
 				<div id="container"></div>
 
-				<!-- Поля ввода и кнопки -->
-				<div class="controls">
-					<div class="input-group">
-						<label for="intInput">int:</label>
-						<input
-							type="number"
-							id="intInput"
-							placeholder="Введите int"
-							step="1" />
-					</div>
-					<div class="input-group">
-						<label for="doubleInput">double:</label>
-						<input
-							type="number"
-							id="doubleInput"
-							placeholder="Введите double"
-							step="any" />
-					</div>
-					<div class="input-group">
-						<label for="charInput">char:</label>
-						<input
-							type="text"
-							id="charInput"
-							placeholder="Введите char"
-							maxlength="1" />
-					</div>
-					<div class="button-group">
-						<button id="animateButton">Запустить анимацию</button>
-						<button id="toggleOpacityButton">Изменить прозрачность</button>
+				<!-- Меню и контролы -->
+				<div class="menu">
+					<button id="menuToggle">Меню</button>
+					<div class="controls">
+						<!-- Ваши существующие инпуты и кнопки -->
+						<div class="input-group">
+							<label for="intInput">int:</label>
+							<input
+								type="number"
+								id="intInput"
+								placeholder="Введите int"
+								step="1" />
+						</div>
+						<div class="input-group">
+							<label for="doubleInput">double:</label>
+							<input
+								type="number"
+								id="doubleInput"
+								placeholder="Введите double"
+								step="any" />
+						</div>
+						<div class="input-group">
+							<label for="charInput">char:</label>
+							<input
+								type="text"
+								id="charInput"
+								placeholder="Введите char"
+								maxlength="1" />
+						</div>
+						<div class="button-group">
+							<button id="animateButton">Запустить анимацию</button>
+							<button id="toggleOpacityButton">Изменить прозрачность</button>
+						</div>
 					</div>
 				</div>
 			</div>
